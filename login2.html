@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ku" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Login - SocialApp</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet"/>
+<style>
+body{margin:0;font-family:'Tajawal',sans-serif;background:#1a1a2e;color:#fff;display:flex;justify-content:center;align-items:center;height:100vh;transition:0.3s}
+.login-container{background:#162447;padding:30px;border-radius:16px;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,0.4);width:90%;max-width:400px}
+h1{margin-bottom:20px;color:#e43f5a}
+.google-btn{display:flex;align-items:center;justify-content:center;gap:10px;background:#fff;color:#000;padding:12px 20px;border:none;border-radius:10px;font-weight:700;cursor:pointer;transition:0.2s;font-size:1em}
+.google-btn img{width:24px;height:24px}
+.google-btn:hover{transform:scale(1.05)}
+</style>
+</head>
+<body>
+
+<div class="login-container">
+  <h1>SocialApp</h1>
+  <p>بۆ دەستپێکردن، بە Google Sign-In داخڵ ببە</p>
+  <button id="google-login" class="google-btn">
+    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google Logo"/> داخڵکردن بە Google
+  </button>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey:"AIzaSyBiX0jhmNgyv_CAudswKUKXqf4B_YGckwo",
+  authDomain:"kurdishapp-16185.firebaseapp.com",
+  projectId:"kurdishapp-16185",
+  storageBucket:"kurdishapp-16185.appspot.com",
+  messagingSenderId:"1092263652082",
+  appId:"1:1092263652082:web:447c6fe6822c02a2453e6b"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
+
+document.getElementById("google-login").onclick = async () => {
+  try {
+    await signInWithPopup(auth, provider);
+    window.location.href = "feed.html";
+  } catch (error) {
+    alert("هەڵە ڕویدا: "+error.message);
+  }
+};
+
+onAuthStateChanged(auth,user=>{
+  if(user) window.location.href="feed.html";
+});
+</script>
+</body>
+</html>
